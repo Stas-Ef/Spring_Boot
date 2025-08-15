@@ -7,8 +7,8 @@ import java.util.Objects;
 import java.util.UUID;
 
 final public class Article implements Searchable {
-    String name;
-    String text;
+    private final  String name;
+    private final String text;
     private final UUID id;
 
 

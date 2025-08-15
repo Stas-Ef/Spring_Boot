@@ -23,12 +23,7 @@ public class SearchService {
         return storageService.getAllSearchables().stream()
                 .filter(searchPattern -> {
                     String name = null;
-                    if (searchPattern instanceof Article) {
-                        name = searchPattern.getproductName();
-
-                    } else if (searchPattern instanceof Product) {
-                        name = searchPattern.getproductName();
-                    }
+                    name = searchPattern.getproductName();
                     return name != null && name.toString().toLowerCase().contains(lowerPattern);
                 })
                 .map(SearchResult::fromSearchable)
