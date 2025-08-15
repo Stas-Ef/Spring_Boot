@@ -53,12 +53,12 @@ public abstract class Product implements Searchable {
     public boolean equals(Object obj) {
 
         Product product = (Product) obj;
-        return productName.equals(product.productName);
+        return productName.equals(product.productName) && id.equals(product.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(productName);
+        return Objects.hash(id, productName);
     }
 
     @Override

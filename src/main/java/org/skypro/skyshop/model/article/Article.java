@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 final public class Article implements Searchable {
-    private final  String name;
+    private final String name;
     private final String text;
     private final UUID id;
 
@@ -47,11 +47,11 @@ final public class Article implements Searchable {
     @Override
     public boolean equals(Object object) {
         if (!(object instanceof Article article)) return false;
-        return Objects.equals(name, article.name) && Objects.equals(text, article.text);
+        return Objects.equals(name, article.name) && Objects.equals(text, article.text) && Objects.equals(id, article.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, text);
+        return Objects.hash(id, name, text);
     }
 }
