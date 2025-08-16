@@ -21,14 +21,9 @@ public class SearchService {
 
 
         return storageService.getAllSearchables().stream()
-                .filter(searchPattern -> {
-                    String name = null;
-                    name = searchPattern.getproductName();
-                    return name != null && name.toString().toLowerCase().contains(lowerPattern);
-                })
+                .filter(sl -> sl.getproductName() != null && sl.getproductName().toLowerCase().contains(lowerPattern))
                 .map(SearchResult::fromSearchable)
                 .collect(Collectors.toList());
 
     }
-
 }

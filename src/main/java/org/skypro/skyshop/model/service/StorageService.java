@@ -23,6 +23,7 @@ public class StorageService {
     }
 
     public Collection<Product> getAllProducts() {
+        System.out.println("products = " + products.values() + "Id" + products.keySet());
         return products.values();
     }
 
@@ -34,7 +35,13 @@ public class StorageService {
         List<Searchable> result = new ArrayList<>();
         result.addAll(articles.values());
         result.addAll(products.values());
+        System.out.println("result = " + result);
         return result;
+    }
+
+    public Optional<Product> getProductById(UUID id) {
+        return Optional.ofNullable(products.get(id));
+
     }
 
     private void initializeTestData() {
@@ -48,12 +55,12 @@ public class StorageService {
             SimpleProduct Watermelon = new SimpleProduct(UUID.randomUUID(), "Арбуз", 1000);
             SimpleProduct Potato = new SimpleProduct(UUID.randomUUID(), "Картофель", 10000);
 
-            products.put(UUID.randomUUID(), Apple);
-            products.put(UUID.randomUUID(), Banana);
-            products.put(UUID.randomUUID(), Onion);
-            products.put(UUID.randomUUID(), Pineapple);
-            products.put(UUID.randomUUID(), Watermelon);
-            products.put(UUID.randomUUID(), Potato);
+            products.put(Apple.getId(), Apple);
+            products.put(Banana.getId(), Banana);
+            products.put(Onion.getId(), Onion);
+            products.put(Pineapple.getId(), Pineapple);
+            products.put(Watermelon.getId(), Watermelon);
+            products.put(Potato.getId(), Potato);
 
             Article miniBananas = new Article(UUID.randomUUID(), "Маленькие Бананы", "Почти как бананы, только в несколько раз меньше. Не Яблоки.");
             Article tomato = new Article(UUID.randomUUID(), "Помидоры", "Красные, но Не Яблоки.");
@@ -61,11 +68,11 @@ public class StorageService {
             Article gala = new Article(UUID.randomUUID(), "Яблоки \"Гала\"", "Еще одна из многих разновидностей яблок");
             Article antonovka = new Article(UUID.randomUUID(), "Яблоки \"Антоновка\"", "Одна из многих разновидностей яблок");
 
-            articles.put(UUID.randomUUID(), miniBananas);
-            articles.put(UUID.randomUUID(), tomato);
-            articles.put(UUID.randomUUID(), strawberry);
-            articles.put(UUID.randomUUID(), gala);
-            articles.put(UUID.randomUUID(), antonovka);
+            articles.put(miniBananas.getId(), miniBananas);
+            articles.put(tomato.getId(), tomato);
+            articles.put(strawberry.getId(), strawberry);
+            articles.put(gala.getId(), gala);
+            articles.put(antonovka.getId(), antonovka);
 
 
         } catch (Exception e) {
