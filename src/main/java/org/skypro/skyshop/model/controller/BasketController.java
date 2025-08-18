@@ -3,7 +3,10 @@ package org.skypro.skyshop.model.controller;
 
 import org.skypro.skyshop.model.basket.UserBasket;
 import org.skypro.skyshop.model.service.BasketService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+
 
 import java.util.UUID;
 
