@@ -32,7 +32,6 @@ public class BasketService {
 
     public UserBasket getUserBasket() {
         Map<UUID, Integer> productMap = productBasket.getProducts();
-        //System.out.println("1111111" + productBasket.getProducts());
         List<BasketItem> items = productMap.entrySet().stream()
                 .map(entry -> {
                     UUID id = entry.getKey();
