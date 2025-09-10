@@ -2,7 +2,11 @@ package org.skypro.skyshop;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.skypro.skyshop.model.Exception.NameIsBlankException;
 import org.skypro.skyshop.model.basket.BasketItem;
 import org.skypro.skyshop.model.basket.ProductBasket;
@@ -20,18 +24,19 @@ import java.util.UUID;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(MockitoExtension.class)
 class BasketServiceTest {
 
+    @Mock
     private ProductBasket productBasket;
+
+    @Mock
     private StorageService storageService;
+
+    @InjectMocks
     private BasketService basketService;
 
-    @BeforeEach
-    void setUp() {
-        productBasket = mock(ProductBasket.class);
-        storageService = mock(StorageService.class);
-        basketService = new BasketService(productBasket, storageService);
-    }
+
 
     @Test
     void addProductToBasket_NonExistentProduct_ShouldThrow() {

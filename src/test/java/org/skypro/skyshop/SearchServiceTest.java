@@ -2,7 +2,11 @@ package org.skypro.skyshop;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.skypro.skyshop.model.Exception.NameIsBlankException;
 import org.skypro.skyshop.model.article.Article;
 import org.skypro.skyshop.model.product.Product;
@@ -17,16 +21,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.*;
 
+@ExtendWith(MockitoExtension.class)
 class SearchServiceTest {
 
+    @Mock
     private StorageService storageService;
+    @InjectMocks
     private SearchService searchService;
-
-    @BeforeEach
-    void setUp() {
-        storageService = Mockito.mock(StorageService.class);
-        searchService = new SearchService(storageService);
-    }
 
 
     @Test
@@ -54,7 +55,7 @@ class SearchServiceTest {
     @Test
     void testSearch_FoundMatchingObject() throws NameIsBlankException {
         UUID productId = UUID.randomUUID();
-        Product apple = new SimpleProduct(UUID.randomUUID(), "Яблоки", 25);
+        Product apple = new SimpleProduct(productId, "Яблоки", 25);
         List<Searchable> objects = new ArrayList<>();
         objects.add(apple);
         objects.add(new Article(UUID.randomUUID(), "Семечки", "Соленые"));
@@ -64,6 +65,18 @@ class SearchServiceTest {
         Collection<SearchResult> result = searchService.search("яблоки");
         assertEquals(1, result.size(), "Должен быть найден один объект");
         assertTrue(result.stream().anyMatch(r -> r.getName().equals("Яблоки")));
+        SearchResult searchResult = result.iterator().next();
+
+        assertEquals("Яблоки", searchResult.getName());
+        assertEquals("PRODUCT", searchResult.getContentType());
+        assertEquals(productId.toString(), searchResult.getId());
+
+        SearchResult expectedResult = new SearchResult(
+                productId.toString(),
+                "Яблоки",
+                "PRODUCT"
+        );
+        assertEquals(expectedResult, searchResult);
     }
 
 
@@ -76,6 +89,11 @@ class SearchServiceTest {
         when(storageService.getAllSearchables()).thenReturn(objects);
 
         Collection<SearchResult> result = searchService.search("яблоки");
-        assertEquals(1, result.size());
+        assertEquals(1, result.size(), "Должен быть найден один объект");
+        SearchResult expected = new SearchResult(productId.toString(),"Зеленые яблоки", "PRODUCT");
+
+
+        assertTrue(result.contains(expected), "Результат должен содержать ожидаемый SearchResult");
+
     }
 }

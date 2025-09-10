@@ -1,5 +1,9 @@
 package org.skypro.skyshop.model.search;
 
+import org.skypro.skyshop.model.product.Product;
+
+import java.util.Objects;
+
 public final class SearchResult {
     private final String id;
     private final String name;
@@ -18,7 +22,6 @@ public final class SearchResult {
     public String getName() {
         return name;
     }
-
 
 
     public String getContentType() {
@@ -42,4 +45,15 @@ public final class SearchResult {
         return new SearchResult(idStr, name, contentType);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+
+        SearchResult searchResult = (SearchResult) obj;
+        return name.equals(searchResult.name) && id.equals(searchResult.id) && contentType.equals(searchResult.contentType);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, contentType);
+    }
 }
